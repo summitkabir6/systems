@@ -1,0 +1,85 @@
+# 02 · Paid quiz funnel
+
+## 1. The problem and who it's for
+
+LockedIn is free, so a paid campaign has to earn an install rather than a sale. The question was whether a Meta ad could bring people who would finish a diagnostic and give an email, so that I could nurture them into the app.
+
+- **Audience:** cold Meta audience in Canada. The quiz is a structured diagnostic (Focus, Energy, Discipline).
+- **Output I care about:** quiz completion, email capture, and store taps, not clicks. Clicks are cheap.
+
+## 2. How it works
+
+```mermaid
+flowchart TD
+  AD[Meta ad, UTM tagged] --> Q[Quiz: 36 screens, 21 questions]
+  Q --> EM[Email gate with consent checkbox]
+  EM --> RES[Results page, teaser]
+  EM -->|quiz_email_submitted| KL[Klaviyo list, single opt-in]
+  KL --> E1[E1 results email, immediate]
+  KL --> E2[E2 day 2, E3 day 5]
+  RES -->|quiz_store_clicked| APP[App Store or Google Play]
+  Q -.->|every step| PH[(PostHog events)]
+  AD -.->|Pixel and CAPI, deduplicated| META[Meta Events Manager]
+```
+
+Build choices:
+- **Quiz built in Lovable** as a config-driven flow, so each screen is data rather than code. It has an email step, results page, and store CTA.
+- **Meta Pixel plus Conversions API**, deduplicated with an event ID, firing PageView, ViewContent, QuizStart, Lead, QuizComplete and StoreClick. The `?test=1` flag is meant to skip Meta events so my own runs don't train the algorithm. I haven't confirmed it does, so it's an open item.
+- **Consent.** Everyone who submits gets the results email (E1). Only people who tick the CASL box go on the consented list that receives the day 2 and day 5 emails.
+- **Nurture.** A triggered flow, never a broadcast. Quiz leads never enter e-commerce segments (an exclusion on the engaged-customer segment).
+
+## 3. Volume, in numbers
+
+Window: 29 Sep to 29 Oct 2026, PostHog, excluding events tagged `is_test`.
+
+| Stage | Count | Notes |
+|---|---|---|
+| Quiz starts (labelled variants) | about 390 | Free Focus Test 263, Sign Post 29, C2 variants 98 |
+| Completed results | about 192 | Free Focus Test 169 |
+| Email captures | about 140 | 120 from Free Focus Test, 16 from Sign Post, 1 from C2 Sign Post |
+| Store taps | 10 | 7 from Free Focus Test |
+| Ad spend and cost per lead | **from Meta Ads, pasted from screenshot** | Not in PostHog. Fill in before publishing. |
+
+The PostHog dashboard, *LockedIn Quiz – Funnel & Ads*, shows the funnel, drop-off by screen, and results by `utm_content`.
+
+## 4. Redacted sample output
+
+Funnel rows (one variant, counts only):
+
+```
+variant          step_viewed  started  completed  email_submitted  store_click
+Free Focus Test  8,106        263      169        120 people       7
+Sign Post        931          29       22         16               0
+```
+
+Event payload shape (values redacted):
+
+```json
+{
+  "event": "quiz_email_submitted",
+  "properties": {
+    "app": "lockedin_quiz",
+    "$host": "quiz.gymarmy.app",
+    "utm_source": "meta",
+    "utm_campaign": "ADHD Quiz",
+    "utm_content": "Free Focus Test",
+    "is_test": false,
+    "consent_casl": true
+  }
+}
+```
+
+## 5. What broke, and what I'd rebuild differently
+
+**What broke**
+- **Ad labels aren't normalized.** The same ad shows up as "Free Focus Test" and "C2_FreeFocusTest". Two naming schemes were live at once, so the per-ad report splits one ad in two.
+- **An unresolved template macro.** Some traffic arrived with the literal `{{ad.name}}` in `utm_content`, so a few leads can't be attributed to an ad. The UTM macro in the ad template was wrong on at least one ad.
+- **A suspicious variant.** One variant shows about 830 people seeing a step but 12 starting. I haven't confirmed whether that's a broken first screen, bot or preview traffic. I'm not drawing a conclusion until I've checked.
+- **Test traffic in production events.** Test runs reached PostHog and Meta before I added `?test=1` handling. That skewed early numbers.
+- **Email gate placed before value.** The first version asked for an email before showing any result. The later version shows a teaser first. I'd test that order on purpose rather than guess.
+
+**What I'd rebuild**
+1. One naming schema for `utm_content`, enforced by a link builder rather than typed by hand.
+2. Pixel and CAPI test mode isolated from production, by default.
+3. A reconciliation check that flags any `utm_content` that doesn't match the ad registry.
+4. A/B the email gate position with a fixed sample size instead of changing it mid-flight.
