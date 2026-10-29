@@ -2,7 +2,7 @@
 
 I build the operational systems that turn raw traffic and customer data into reliable, measurable growth loops — automation, segmentation, multi-tool orchestration, and the measurement layer that tells me which numbers I can trust.
 
-These systems were built and run for **Gym Army** (a DTC fitness equipment brand) and **LockedIn** (its free accountability app). I'm the COO and co-founder of Gym Army, and I build the systems myself in Apps Script, Python, SQL, Klaviyo, Lovable, Meta and PostHog.
+These systems were built and run for **Gym Army** (a DTC fitness equipment brand) and **LockedIn** (its health, fitness, and accountability app). I'm the COO of Gym Army, and lead gtm and product at **LockedIn**. I build the systems myself in Apps Script, Python, SQL, Klaviyo, Lovable, Meta and PostHog.
 
 This repo is about the systems, not a scorecard. Each system has four parts: how it runs, what it produced, what broke, and how I measure behaviour so I can build on top of it.
 
