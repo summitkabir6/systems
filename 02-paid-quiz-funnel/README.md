@@ -39,7 +39,8 @@ Window: 29 Sep to 29 Oct 2026, PostHog, excluding events tagged `is_test`.
 | Email captures | about 140 | 120 from Free Focus Test, 16 from Sign Post, 1 from C2 Sign Post |
 | Store taps | 10 | 7 from Free Focus Test |
 | Ad spend, lead campaign ("ADHD Quiz") | $324.19, 141 leads, $2.29 per lead | Meta Ads Manager, 29 Sep–28 Oct 2026. Meta's self-reported Website Leads, optimized for Lead. 10,773 impressions, 5,685 reach. |
-| Ad spend, traffic campaign (C2) | $298.49, 1,288 landing page views, $0.23 per view | Meta Ads Manager, 29 Sep–28 Oct 2026. Optimized for landing page views, not leads. 33,606 impressions, 21,557 reach. Now off. |
+| Ad spend, traffic campaign (C2) | $298.49, 1,288 landing page views, $0.23 per view | Meta Ads Manager, 29 Sep–28 Oct 2026. Optimized for landing page views, not leads. 33,606 impressions, 21,557 reach. Sends to the quiz only. Now off. |
+| Total quiz spend, cost per email capture | $622.68, about $4.45 per email capture | Derived: both campaigns' Meta spend divided by the about 140 PostHog email captures above. The windows differ by one day. |
 
 Meta's lead count is for optimization only. Klaviyo is the source of truth for leads (see [the measurement layer](../05-measurement-layer/)). The Meta window ends 28 Oct, one day before the PostHog window.
 
