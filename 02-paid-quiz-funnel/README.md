@@ -34,13 +34,13 @@ Window: 29 Sep to 29 Oct 2026, PostHog, excluding events tagged `is_test`.
 
 | Stage | Count | Notes |
 |---|---|---|
-| Quiz starts (labelled variants) | about 390 | Free Focus Test 263, Sign Post 29, C2 variants 98 |
-| Completed results | about 192 | Free Focus Test 169 |
-| Email captures | about 140 | 120 from Free Focus Test, 16 from Sign Post, 1 from C2 Sign Post |
-| Store taps | 10 | 7 from Free Focus Test |
+| Quiz starts | 534 | PostHog, excluding `is_test` |
+| Completed results | 388 | |
+| Email captures | 313 | |
+| Store taps | 116 | |
 | Ad spend, lead campaign ("ADHD Quiz") | $324.19, 141 leads, $2.29 per lead | Meta Ads Manager, 29 Sep–28 Oct 2026. Meta's self-reported Website Leads, optimized for Lead. 10,773 impressions, 5,685 reach. |
 | Ad spend, traffic campaign (C2) | $298.49, 1,288 landing page views, $0.23 per view | Meta Ads Manager, 29 Sep–28 Oct 2026. Optimized for landing page views, not leads. 33,606 impressions, 21,557 reach. Sends to the quiz only. Now off. |
-| Total quiz spend, cost per email capture | $622.68, about $4.45 per email capture | Derived: both campaigns' Meta spend divided by the about 140 PostHog email captures above. The windows differ by one day. |
+| Total quiz spend, cost per email capture | $622.68, about $1.99 per email capture | Derived: both campaigns' Meta spend divided by the 313 PostHog email captures above. The windows differ by one day. |
 
 Meta's lead count is for optimization only. Klaviyo is the source of truth for leads (see [the measurement layer](../05-measurement-layer/)). The Meta window ends 28 Oct, one day before the PostHog window.
 
@@ -66,7 +66,7 @@ Event payload shape (values redacted):
     "$host": "quiz.gymarmy.app",
     "utm_source": "meta",
     "utm_campaign": "ADHD Quiz",
-    "utm_content": "Free Focus Test",
+    "utm_content": "<variant label>",
     "is_test": false,
     "consent_casl": true
   }
@@ -76,14 +76,14 @@ Event payload shape (values redacted):
 ## 5. What broke, and what I'd rebuild differently
 
 **What broke**
-- **Ad labels aren't normalized.** The same ad shows up as "Free Focus Test" and "C2_FreeFocusTest". Two naming schemes were live at once, so the per-ad report splits one ad in two.
 - **An unresolved template macro.** Some traffic arrived with the literal `{{ad.name}}` in `utm_content`, so a few leads can't be attributed to an ad. The UTM macro in the ad template was wrong on at least one ad.
 - **A suspicious variant.** One variant shows about 830 people seeing a step but 12 starting. I haven't confirmed whether that's a broken first screen, bot or preview traffic. I'm not drawing a conclusion until I've checked.
 - **Test traffic in production events.** Test runs reached PostHog and Meta before I added `?test=1` handling. That skewed early numbers.
 - **Email gate placed before value.** The first version asked for an email before showing any result. The later version shows a teaser first. I'd test that order on purpose rather than guess.
+- **Attribution gaps.** There is no reliable post-purchase link tying a quiz-driven install or store tap back to a specific ad or email nurture sequence, so true "installs per order" or quiz ROI remains unmeasurable beyond the immediate funnel.
 
 **What I'd rebuild**
-1. One naming schema for `utm_content`, enforced by a link builder rather than typed by hand.
-2. Pixel and CAPI test mode isolated from production, by default.
-3. A reconciliation check that flags any `utm_content` that doesn't match the ad registry.
-4. A/B the email gate position with a fixed sample size instead of changing it mid-flight.
+1. Pixel and CAPI test mode isolated from production, by default.
+2. A reconciliation check that flags any `utm_content` that doesn't match the ad registry.
+3. A/B the email gate position with a fixed sample size instead of changing it mid-flight.
+4. Coupon or unique referral codes in the nurture emails so downstream orders can be attributed back to the quiz funnel.

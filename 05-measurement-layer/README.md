@@ -51,8 +51,8 @@ Reconciliation table, one week (counts only):
 ```
 metric                 meta   posthog   klaviyo   use for
 quiz leads             3      2         (see)     klaviyo is source of truth
-quiz starts            -      ~390      -         posthog only
-store taps             -      10        -         posthog only
+quiz starts            -      534      -         posthog only
+store taps             -      116       -         posthog only
 ```
 
 Repeat-opener tier output (addresses removed):
@@ -81,13 +81,13 @@ event: quiz_step_viewed
 
 **What broke**
 - **Three numbers for one lead.** Meta, PostHog and Klaviyo each counted leads differently, and for the first few days PostHog missed a real lead entirely because it hadn't started tracking yet.
-- **Label drift.** Two schemes for the same ad. The fix was to pick one and enforce it in the link builder.
 - **Unresolved macros.** A UTM template variable didn't resolve on some traffic. I found it because the values were literal strings in the data.
 - **Test traffic in production.** Test runs reached Meta before tagging. Meta's optimization was trained on my own clicks for a short period.
 - **Post-purchase attribution gap.** There's no link from a Shopify order back to the touchpoint that produced it, so "installs per order" can't be measured yet.
+- **Early mass-send approach.** Initial newsletters and app promotions went out as broad mass sends to large lists rather than targeted segments. Content was general, and conversion was weak until segmentation improved.
 
 **What I'd rebuild**
-1. A single link builder that enforces the naming convention and writes to a shared registry.
-2. A nightly reconciliation job that flags any metric where the sources disagree by more than a set threshold.
-3. Order attribution by a coupon code per channel (the popup and the order email each get a code), so orders can be tied back to touchpoints.
-4. A decision log: each number I act on is written down with its source and the question it answers.
+1. A nightly reconciliation job that flags any metric where the sources disagree by more than a set threshold.
+2. Order attribution by a coupon code per channel (the popup and the order email each get a code), so orders can be tied back to touchpoints.
+3. A decision log: each number I act on is written down with its source and the question it answers.
+4. Segment-first campaign design: break lists into niches (recent orders, customer-service contacts, location, repeat customers, and form-based self-identification) so campaigns feel like a conversation rather than a broadcast.

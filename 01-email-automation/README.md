@@ -88,14 +88,14 @@ Apps Script run log (one issue, values redacted):
 ## 5. What broke, and what I'd rebuild differently
 
 **What broke**
-- **I sent to everyone after being warned.** The newsletter goes to all 8,531 profiles, including people who never gave consent to a marketing email. I was warned about CASL and deliverability and chose to send anyway. I'd rebuild it with a consent-filtered segment and a named approver before any issue goes out.
-- **Auto-scheduling with no approval gate.** A bad issue would go out at 9:30 AM with nobody looking at it. The right design is propose mode: the script builds and emails the campaigns, and a named person schedules them.
+- **Initial mass sends lacked segmentation.** When I first started the newsletters and app promotions, campaigns went out as large mass sends rather than segment-sized ones. The content was general for most people, and conversion was not promising.
 - **Batch 4–7 went out after a stop recommendation.** Four consecutive sends to exhausted audiences cost unsubscribes and some reputation on a domain that carries the store's order emails.
 - **Vanity fields in the copy.** A "1,000 spots" claim and an unsourced stat went out in campaigns. Neither could be verified.
 - **Klaviyo's API can't edit a flow.** That ruled out the replay design and forced the simpler day-based design.
+- **Attribution gaps.** There is still no reliable link from a Shopify order back to the specific email or newsletter touchpoint that produced it, so "installs per order" or email-driven revenue remains hard to measure precisely.
 
-**What I'd rebuild**
-1. Consent-filtered segments by default, with a visible count before scheduling.
-2. Propose mode with a named approver. The script never schedules without a human click.
-3. A pre-send check: bounce rate of the source list, a spam-complaint trend, and a blocked-claim list (no unverifiable numbers).
-4. Suppression applied at list build, not at send time.
+**What I'd rebuild / what I did to fix it**
+1. I started breaking the large population into sub-categories so I could target them based on their niche. This includes recent orders, customers who recently reached out for customer service, location, and repeat customers. Eventually I also ran form-based campaigns where receivers engage with an email that gives us information about who they are, creating even more sub-categories. This allowed new angles of attack. Over time the campaigns and newsletters became more of a conversation between me and the customers/users rather than pure email marketing. It helped us gain credibility and build a healthier, stronger, closer customer relationship.
+2. A pre-send check: bounce rate of the source list, a spam-complaint trend, and a blocked-claim list (no unverifiable numbers).
+3. Suppression applied at list build, not at send time.
+4. Order attribution by a coupon code or tagged link per campaign so email-driven installs and orders can be measured.
