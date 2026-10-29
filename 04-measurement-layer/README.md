@@ -1,4 +1,4 @@
-# 05 · Measurement layer
+# 04 · Measurement layer
 
 ## 1. The problem and who it's for
 

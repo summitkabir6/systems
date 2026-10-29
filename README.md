@@ -17,7 +17,7 @@ Gym Army is my company, so I made the call to publish architecture and aggregate
 | 01 | [Email automation and consent gates](01-email-automation) | Daily newsletter from a Google Drive folder into Klaviyo, plus reactivation sends with consent and deliverability gates | 8,531 profiles in the newsletter segment. About 6,800 EN and 990 FR recipients per issue. Issues 1–4 measured. Reactivation program: roughly 8,400 sends in total. |
 | 02 | [Paid quiz funnel](02-paid-quiz-funnel) | Meta ads to a 36-screen quiz, email capture, Klaviyo nurture, then App Store and Google Play taps, all tracked in PostHog | 534 quiz starts, 388 completed results, 313 email captures, 116 store taps (29 Sep–29 Oct) |
 | 03 | [Order and QR touchpoints](03-order-and-qr-touchpoints) | LockedIn block in every order confirmation (Shopify plus Klaviyo), and three QR codes on outside shipment labels with short-link to UTM to PostHog attribution | LockedIn block on every order confirmation. QR: about 160 boxes, 119 scans and 65 downloads across 3 labels in about 1.5 months. |
-| 04 | [Measurement layer](05-measurement-layer) | The event taxonomy, UTM conventions, source-of-truth rules and reconciliation that let me trust (or distrust) the numbers above | 3 platforms reconciled (Meta, PostHog, Klaviyo). 4 known reconciliation gaps documented. |
+| 04 | [Measurement layer](04-measurement-layer) | The event taxonomy, UTM conventions, source-of-truth rules and reconciliation that let me trust (or distrust) the numbers above | 3 platforms reconciled (Meta, PostHog, Klaviyo). 4 known reconciliation gaps documented. |
 
 ## How the systems connect
 
