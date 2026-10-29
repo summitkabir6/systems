@@ -51,6 +51,17 @@ flowchart LR
 | QR identified visitors (from 14 Oct to 29 Oct) | 2 (one per label on 2 labels; label 2 had 0) | PostHog |
 | QR store taps | 0 confirmed | PostHog |
 
+**QR codes sent with shipments and tracked with PostHog, over about 1.5 months.**
+
+| Label | Boxes sent | Scanned | Downloaded | Scan rate | Downloads per scan |
+|---|---|---|---|---|---|
+| Label 1 | about 50 | 45 | 20 | about 90% | 44% |
+| Label 2 | 55 | 31 | 19 | 56% | 61% |
+| Label 3 | 55 | 43 | 26 | 78% | 60% |
+| Total | about 160 | 119 | 65 | about 74% | 55% |
+
+The rows above count identified visitors only, for 14–29 Oct. This table counts every scan over the full 1.5 months.
+
 The QR numbers are too low to compare labels. I'm reporting them because the measurement works, not because the A/B test has an answer yet.
 
 ## 4. Redacted sample output
