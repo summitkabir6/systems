@@ -8,7 +8,9 @@ This repo is about the systems, not a scorecard. Each system has four parts: how
 
 ## What's proprietary, and why
 
-Gym Army is my company, so I made the call to publish architecture and aggregated outputs. Nothing here contains customer emails or names, order-level data, supplier terms, margins, or API keys. Numbers are rounded or aggregated, and where a number is a platform's self-reported figure, I say so.
+At Gym Army I make the call to publish architecture and aggregated outputs. Nothing here contains customer emails or names, order-level data, supplier terms, or margins. Numbers are dated as of October 28, 2026.
+
+
 
 ## The systems
 
