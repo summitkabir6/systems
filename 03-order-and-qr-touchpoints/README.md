@@ -49,8 +49,6 @@ flowchart LR
 | Order-email open rate / click rate | 64% / 4.4% | Klaviyo, before the redesign |
 | QR labels live | 3 | Shipment labels |
 
-**QR codes sent with shipments and tracked with PostHog, over about 1.5 months.**
-
 | Label | Boxes sent | Scanned | Downloaded | Scan rate | Downloads per scan |
 | --- | --- | --- | --- | --- | --- |
 | Label 1 | about 50 | 45 | 20 | about 90% | 44% |
