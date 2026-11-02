@@ -48,8 +48,6 @@ flowchart LR
 | Order-email sends in 90 days (Klaviyo flow) | 114 | Klaviyo, before the redesign |
 | Order-email open rate / click rate | 64% / 4.4% | Klaviyo, before the redesign |
 | QR labels live | 3 | Shipment labels |
-| QR identified visitors (from 14 Oct to 29 Oct) | 2 (one per label on 2 labels; label 2 had 0) | PostHog |
-| QR store taps | 0 confirmed | PostHog |
 
 **QR codes sent with shipments and tracked with PostHog, over about 1.5 months.**
 
@@ -73,15 +71,6 @@ flow: Order Confirmation - Standard   trigger: Placed Order
 message: Order email (LockedIn block)  sends_90d: 114   open: 64%   click: 4.4%
 ```
 
-QR attribution, PostHog (identifiers removed):
-
-```
-utm_campaign   utm_content   event          people
-box_outside    label_1       site_landed    1
-box_outside    label_2       site_landed    0
-box_outside    label_3       site_landed    1
-```
-
 Store link, as used in the Shopify template (tag names only):
 
 ```
@@ -96,7 +85,6 @@ https://play.google.com/store/apps/details?id=…&referrer=utm_source%3Dshopify%
 - **A stale block in Shopify's template.** An old "Workout Tracker" promo was baked into Shopify's notification template, not Klaviyo's. Editing Klaviyo didn't remove it.
 - **A flow edit mid-send.** I swapped the template while a test order was triggering it, and that order missed the new version. That was my timing error, not a system failure, but it's a rule now: never edit a live flow during a test.
 - **Event lag misread as failure.** Klaviyo's "Received Email" events arrive minutes late. I briefly concluded the email wasn't sending. Check the inbox before concluding anything.
-- **An unsourced claim in the email.** The "80% of home gym equipment sits unused within a month" line and the "4.9 ★" rating shipped without a source. I'd verify or remove both before the next send. This is the one I'd fix first.
 - **The QR test is still small.** About 160 boxes across three labels is enough to see a pattern, not to call a winner. The label differences could still be noise.
 - **Attribution gaps.** There is still no link from a Shopify order back to the specific order-email or QR touchpoint that produced a subsequent install or repeat order, so "installs per order" cannot be measured.
 
