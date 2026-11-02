@@ -80,8 +80,6 @@ https://play.google.com/store/apps/details?id=…&referrer=utm_source%3Dshopify%
 
 **What broke**
 
-- **A stale block in Shopify's template.** An old "Workout Tracker" promo was baked into Shopify's notification template, not Klaviyo's. Editing Klaviyo didn't remove it.
-- **A flow edit mid-send.** I swapped the template while a test order was triggering it, and that order missed the new version. That was my timing error, not a system failure, but it's a rule now: never edit a live flow during a test.
 - **Event lag misread as failure.** Klaviyo's "Received Email" events arrive minutes late. I briefly concluded the email wasn't sending. Check the inbox before concluding anything.
 - **The QR test is still small.** About 160 boxes across three labels is enough to see a pattern, not to call a winner. The label differences could still be noise.
 - **Attribution gaps.** There is still no link from a Shopify order back to the specific order-email or QR touchpoint that produced a subsequent install or repeat order, so "installs per order" cannot be measured.
