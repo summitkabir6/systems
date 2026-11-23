@@ -1,4 +1,20 @@
+<div align="center">
+
 # systems
+
+![Apps Script](https://img.shields.io/badge/Apps_Script-4285F4?style=for-the-badge&logo=googleappsscript&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-336791?style=for-the-badge)
+![Klaviyo](https://img.shields.io/badge/Klaviyo-232426?style=for-the-badge)
+![Lovable](https://img.shields.io/badge/Lovable-FF5C8A?style=for-the-badge)
+![Meta](https://img.shields.io/badge/Meta-0467DF?style=for-the-badge&logo=meta&logoColor=white)
+![PostHog](https://img.shields.io/badge/PostHog-1D4AFF?style=for-the-badge&logo=posthog&logoColor=white)
+
+[Email automation](01-email-automation) · [Paid quiz funnel](02-paid-quiz-funnel) · [Order and QR touchpoints](03-order-and-qr-touchpoints) · [Measurement layer](04-measurement-layer)
+
+</div>
+
+---
 
 I build the operational systems that turn raw traffic and customer data into reliable, measurable growth loops — automation, segmentation, multi-tool orchestration, and the measurement layer that tells me which numbers I can trust.
 
@@ -6,13 +22,15 @@ These systems were built and run for **Gym Army** (a DTC fitness equipment brand
 
 This repo is about the systems, not a scorecard. Each system has four parts: how it runs, what it produced, what broke, and how I measure behaviour so I can build on top of it.
 
-## What's proprietary, and why
+---
+
+## 🔒 What's proprietary, and why
 
 At Gym Army I make the call to publish architecture and aggregated outputs. Nothing here contains customer emails or names, order-level data, supplier terms, or margins. Numbers are dated as of October 28, 2026.
 
+---
 
-
-## The systems
+## 🧩 The systems
 
 | # | System | What it does | Volume (as of 29 Oct 2026) |
 | --- | --- | --- | --- |
@@ -21,7 +39,9 @@ At Gym Army I make the call to publish architecture and aggregated outputs. Noth
 | 03 | [Order and QR touchpoints](03-order-and-qr-touchpoints) | LockedIn block in every order confirmation (Shopify plus Klaviyo), and three QR codes on outside shipment labels with short-link to UTM to PostHog attribution | LockedIn block on every order confirmation. QR: about 160 boxes, 119 scans and 65 downloads across 3 labels in about 1.5 months. |
 | 04 | [Measurement layer](04-measurement-layer) | The event taxonomy, UTM conventions, source-of-truth rules and reconciliation that let me trust (or distrust) the numbers above | 3 platforms reconciled (Meta, PostHog, Klaviyo). 4 known reconciliation gaps documented. |
 
-## How the systems connect
+---
+
+## 🔗 How the systems connect
 
 ```mermaid
 flowchart LR
@@ -43,13 +63,17 @@ flowchart LR
   M --> DEC[Decisions: kill, keep, build on top]
 ```
 
-## What I'd tell a reviewer first
+---
+
+## 💬 What I'd tell a reviewer first
 
 - Early newsletters and app promotions started as broad mass sends to large lists. Conversion was weak until I began segmenting by niche (recent orders, customer-service contacts, location, repeat customers) and adding form-based self-identification. The campaigns eventually felt more like a conversation than pure email marketing. The same pattern — single source of truth, hygiene rules, and source-of-truth decisions by question — is what I would apply to a City Launcher CRM and routing system.
 - I sent reactivation campaigns to exhausted lists after a stop recommendation. Those numbers are in the repo because I'd rather you see the cost than trust a polished story.
 - Attribution gaps remain: there is still no reliable link from a Shopify order back to the specific touchpoint (email, quiz, QR) that produced it, so "installs per order" is unmeasurable across most systems. Closing that gap (coupon codes or unique referrers per channel) is the first measurement layer I would extend so every City Launcher sees cost per signed team by city on one screen.
 
-## What I would build first for a City Launcher playbook
+---
+
+## 🚀 What I would build first for a City Launcher playbook
 
 The systems above are the foundation. For a multi-city launch model the same principles apply:
 
